@@ -1,18 +1,18 @@
 [DEFAULT]
-show_image_direct_url = True
-show_multiple_locations = True
-bind_host = 172.17.0.4
+bind_host = {{env['HOST_ADDRESS']}}
 bind_port = 9292
 workers = 1
 backlog = 4096
-image_cache_dir = /var/lib/glance/image-cache
-default_publisher_id = image.mike
-registry_host = 172.17.0.4
+image_cache_dir = /
+default_publisher_id = image.sj1dra1001
+registry_host = {{env['HOST_ADDRESS']}}
 registry_port = 9191
 auth_region = uswestsj1
 registry_client_protocol = http
 scrub_time = 43200
 delayed_delete = False
+show_image_direct_url = True
+show_multiple_locations = True
 debug = True
 verbose = True
 use_stderr = True
@@ -23,39 +23,36 @@ notification_driver=messaging
 notification_topics=notifications, lma_notifications
 
 [database]
-connection = mysql+pymysql://glance:ABqg86C30xGYpbu2sVZvhVxN@172.17.0.2/glance?charset=utf8&read_timeout=60
+connection = mysql+pymysql://glance:ABqg86C30xGYpbu2sVZvhVxN@{{env['MYSQL_HOST']}}/glance?charset=utf8&read_timeout=60
 idle_timeout = 3600
 max_pool_size = 30
 max_retries = -1
 max_overflow = 60
 [glance_store]
-stores = glance.store.rbd.Store,glance.store.http.Store,glance.store.cinder.Store
-filesystem_store_datadir = /
 os_region_name=uswestsj1
 
 [image_format]
 disk_formats = raw
 
 [keystone_authtoken]
-auth_uri = http://10.10.32.41:5000/
-signing_dir = /tmp/keystone-signing-glance
+auth_uri = http://{{env['KEYSTONE_HOST']}}:5000/
+signing_dir = /
+identity_uri=http://{{env['KEYSTONE_HOST']}}:35357/
 auth_type = password
-identity_uri=http://10.10.32.41:35357/
 project_name=services
 admin_password=c67pBaSJLeSnDXkhnaOyKfyN
 admin_tenant_name=services
 username=glance
 password=c67pBaSJLeSnDXkhnaOyKfyN
 admin_user=glance
-auth_url=http://10.10.32.41:35357/
+auth_url=http://{{env['KEYSTONE_HOST']}}:35357/
 
 [oslo_concurrency]
 lock_path = /
 
 [oslo_messaging_rabbit]
 amqp_durable_queues = False
-rabbit_host = localhost
-rabbit_hosts = 10.10.32.34:5673,10.10.32.11:5673,10.10.32.24:5673
+rabbit_hosts = {{env['RABBIT_HOST']}}
 rabbit_use_ssl = False
 heartbeat_rate = 2
 rabbit_notification_exchange=glance

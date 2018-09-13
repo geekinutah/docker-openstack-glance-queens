@@ -2,12 +2,12 @@
 image_cache_max_size = 0
 image_cache_stall_time = 86400
 image_cache_dir = /
-registry_host = 172.17.0.4
+registry_host = {{env['HOST_ADDRESS']}}
 registry_port = 9191
 admin_user = glance
 admin_password = c67pBaSJLeSnDXkhnaOyKfyN
 admin_tenant_name = services
-auth_url = http://10.10.32.41:5000/
+auth_url = http://{{env['KEYSTONE_HOST']}}:5000/
 debug = True
 verbose = True
 use_stderr = True
