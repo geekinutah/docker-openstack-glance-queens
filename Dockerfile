@@ -19,8 +19,8 @@ RUN apt-get -q update >/dev/null \
   && apt-get autoremove --yes \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/ 
 
-COPY etc_glance/* /etc/glance
-COPY etc_glance/metadefs/* /etc/glance/metadefs/
+COPY etc_glance/ /etc/glance
+COPY etc_glance/metadefs/ /etc/glance/metadefs/
 COPY start_glance.sh /usr/bin/start_glance.sh
 
 ENTRYPOINT ["/usr/bin/start_glance.sh"]
