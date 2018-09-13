@@ -13,12 +13,14 @@ RUN apt-get -q update >/dev/null \
   && pip install mysqlclient \
   && pip install PyMySQL \
   && pip install Jinja \
-  && mkdir /etc/glance \
+  && mkdir -p /etc/glance/metadefs \
   # Cleanup
   && apt-get clean autoclean \
   && apt-get autoremove --yes \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/ 
 
+COPY etc_glance/* /etc/glance
+COPY etc_glance/metadefs/* /etc/glance/metadefs/
 COPY start_glance.sh /usr/bin/start_glance.sh
 
 ENTRYPOINT ["/usr/bin/start_glance.sh"]
